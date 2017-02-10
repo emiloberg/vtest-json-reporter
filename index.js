@@ -1,15 +1,17 @@
 const fs = require("fs-extra")
 
-function reportJSON({ specs, reporterConfig, log, chalk }) {
+function reportJSON({ specs, reporterConfig, log }) {
   const specType = reporterConfig.depth && reporterConfig.depth.toLowerCase() === "grouped"
     ? "groupedSpecs"
     : "flatSpecs"
 
   fs.outputFileSync(reporterConfig.output, JSON.stringify(specs[specType], null, "  "))
 
-  log.log(`   ${chalk.blue("JSON Report:")} ${reporterConfig.output}`)
+  log.infoValue("JSON Report", reporterConfig.output)
 
   return specs
 }
 
-module.exports = reportJSON
+module.exports = {
+	result: reportJSON
+}
